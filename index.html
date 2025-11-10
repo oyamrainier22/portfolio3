@@ -4,6 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>John Rainier Mayo - Web Developer Portfolio</title>
+    <meta name="description" content="Portfolio of John Rainier Mayo — Frontend web developer crafting modern, responsive, and accessible web experiences with React and Tailwind CSS.">
+    <meta name="theme-color" content="#7c3aed">
+    <meta property="og:title" content="John Rainier Mayo — Web Developer">
+    <meta property="og:description" content="Modern, responsive, and accessible web experiences.">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="resume 2.png">
+    <link rel="icon" href="favicon.ico">
 
     <!-- Load Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -74,20 +81,109 @@
         .progress-bar-inner {
             animation: progress-bar 1s ease-out forwards;
         }
+
+        /* Modern enhancements */
+        :root {
+            --glass-bg: rgba(255, 255, 255, 0.6);
+            --glass-bg-dark: rgba(17, 24, 39, 0.6); /* gray-900 with opacity */
+            --glass-border: rgba(255, 255, 255, 0.25);
+            --accent: #7c3aed; /* purple-600 */
+        }
+
+        .glass {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        .dark .glass {
+            background: var(--glass-bg-dark);
+        }
+
+        .btn-gradient {
+            background-image: linear-gradient(135deg, #8b5cf6 0%, #06b6d4 100%);
+        }
+        .btn-gradient:hover {
+            filter: brightness(1.05);
+        }
+
+        /* Active underline for nav links */
+        .nav-link {
+            position: relative;
+        }
+        .nav-link.nav-active::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: -6px;
+            height: 2px;
+            width: 100%;
+            background: linear-gradient(90deg, #8b5cf6, #06b6d4);
+            border-radius: 9999px;
+            transition: width 200ms ease;
+        }
+
+        /* Animated gradient blobs behind hero */
+        .blob {
+            position: absolute;
+            border-radius: 9999px;
+            filter: blur(40px);
+            opacity: 0.35;
+            pointer-events: none;
+            will-change: transform;
+            animation: floaty 12s ease-in-out infinite;
+        }
+        .blob-1 { background: #8b5cf6; width: 42rem; height: 42rem; top: -8rem; left: -8rem; }
+        .blob-2 { background: #06b6d4; width: 36rem; height: 36rem; bottom: -6rem; right: -6rem; animation-delay: -3s; }
+        @keyframes floaty {
+            0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+            50% { transform: translate3d(2rem, -1rem, 0) scale(1.05); }
+        }
+
+        /* Top scroll progress */
+        #scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            width: 0%;
+            z-index: 60;
+            background: linear-gradient(90deg, #8b5cf6, #06b6d4);
+            box-shadow: 0 0 16px rgba(139, 92, 246, 0.5);
+        }
+
+        /* Reduced motion respect */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.001ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.001ms !important;
+                scroll-behavior: auto !important;
+            }
+        }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800 dark:bg-gray-900 dark:text-gray-200 antialiased">
 
+    <!-- Scroll progress bar -->
+    <div id="scroll-progress" aria-hidden="true"></div>
+
     <!-- Header & Navigation -->
     <header class="sticky top-0 z-50 w-full bg-white/90 dark:bg-gray-900/90 backdrop-blur-md shadow-sm transition-all duration-300">
         <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <!-- Mobile Theme Toggle (Visible on mobile) -->
+            <button id="theme-toggle-mobile" class="md:hidden p-2 rounded-full text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+                <svg id="theme-toggle-sun-mobile" class="h-5 w-5 hidden" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.706-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-1.636 4.95l1.414.707a1 1 0 01-1.414 1.414l-1.414-.707a1 1 0 011.414-1.414zM4 10a1 1 0 11-2 0 1 1 0 012 0zm2.757-4.243a1 1 0 011.414 0l.707.707a1 1 0 01-1.414 1.414l-.707-.707a1 1 0 010-1.414zM10 18a1 1 0 01-1-1v-1a1 1 0 112 0v1a1 1 0 01-1 1z"></path></svg>
+                <svg id="theme-toggle-moon-mobile" class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+            </button>
+
             <!-- Logo - Link to Home -->
-            <a href="#home" class="text-3xl font-bold text-primary-light dark:text-primary-dark nav-link">
+            <a href="#home" class="text-3xl font-bold text-primary-light dark:text-primary-dark nav-link md:mx-0 mx-auto">
                 JRM
             </a>
 
             <!-- Desktop Menu -->
-            <div class="hidden md:flex items-center space-x-6">
+            <div class="hidden md:flex items-center space-x-6 ">
                 <!-- Navigation Links - href attributes will drive the scrolling -->
                 <a href="#home" class="text-gray-700 dark:text-gray-300 hover:text-primary-light dark:hover:text-primary-dark transition-colors nav-link">Home</a>
                 <a href="#about" class="text-gray-700 dark:text-gray-300 hover:text-primary-light dark:hover:text-primary-dark transition-colors nav-link">About</a>
@@ -127,8 +223,10 @@
     <main>
         
         <!-- Home Section -->
-        <section id="home" class="page-section flex items-center justify-center px-6 bg-gradient-to-br from-purple-50 via-purple-50 to-purple-100 dark:from-gray-800 dark:via-gray-900 dark:to-black">
-            <div class="container mx-auto flex flex-col md:flex-row items-center justify-between gap-12 py-24 min-h-screen">
+        <section id="home" class="relative overflow-hidden page-section flex items-center justify-center px-6 bg-gradient-to-br from-purple-50 via-purple-50 to-purple-100 dark:from-gray-800 dark:via-gray-900 dark:to-black">
+            <div class="blob blob-1"></div>
+            <div class="blob blob-2"></div>
+            <div class="container mx-auto flex flex-col md:flex-row items-center justify-between gap-12 py-24 min-h-screen relative">
                 <!-- Text Content -->
                 <div class="md:w-3/5 text-center md:text-left">
                     
@@ -141,10 +239,10 @@
                     </p>
                     
                     <div data-aos="fade-up" data-aos-delay="400" class="mt-8 flex flex-col sm:flex-row justify-center md:justify-start space-y-4 sm:space-y-0 sm:space-x-6">
-                        <a href="#projects" class="px-8 py-3 text-lg text-white font-semibold bg-primary-light dark:bg-primary-dark rounded-full shadow-lg hover:shadow-xl hover:scale-105 transform transition-all duration-300 nav-link">
+                        <a href="#projects" class="px-8 py-3 text-lg text-white font-semibold rounded-full shadow-lg hover:shadow-xl hover:scale-105 transform transition-all duration-300 nav-link btn-gradient ring-1 ring-white/20 dark:ring-white/10">
                             View My Work
                         </a>
-                        <a href="#contact" class="px-8 py-3 text-lg text-primary-light dark:text-primary-dark font-semibold bg-white dark:bg-gray-800 border border-primary-light dark:border-primary-dark rounded-full shadow-lg hover:shadow-xl hover:scale-105 transform transition-all duration-300 nav-link">
+                        <a href="#contact" class="px-8 py-3 text-lg text-primary-light dark:text-primary-dark font-semibold bg-white/70 dark:bg-gray-800/70 glass rounded-full shadow-lg hover:shadow-xl hover:scale-105 transform transition-all duration-300 nav-link ring-1 ring-white/20 dark:ring-white/10">
                             Contact Me
                         </a>
                     </div>
@@ -334,7 +432,7 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
                     
                     <!-- Project Card 1 -->
-                    <div data-aos="fade-up" data-aos-delay="100" class="bg-white dark:bg-gray-900 rounded-xl shadow-lg overflow-hidden group hover:shadow-2xl transition-all duration-300">
+                    <div data-aos="fade-up" data-aos-delay="100" class="relative bg-white/80 dark:bg-gray-900/80 glass rounded-xl shadow-lg overflow-hidden group hover:shadow-2xl transition-all duration-300">
                         <img src="https://placehold.co/600x400/8B5CF6/FFFFFF?text=Project+One" alt="Project Placeholder" class="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105">
                         <div class="p-6">
                             <h3 class="text-xl font-bold mb-2 text-gray-900 dark:text-white">E-commerce Platform Redesign</h3>
@@ -342,10 +440,17 @@
                             <span class="inline-block bg-purple-100 dark:bg-purple-900 text-primary-light dark:text-primary-dark text-xs font-semibold px-3 py-1 rounded-full">React</span>
                             <span class="inline-block bg-purple-100 dark:bg-purple-900 text-primary-light dark:text-primary-dark text-xs font-semibold px-3 py-1 rounded-full">Tailwind</span>
                         </div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-between p-4">
+                            <div class="text-white text-sm">Case Study</div>
+                            <div class="space-x-2">
+                                <a href="#" class="px-3 py-1 text-sm text-white rounded-full btn-gradient shadow">Live</a>
+                                <a href="#" class="px-3 py-1 text-sm bg-white/80 text-gray-900 rounded-full">Code</a>
+                            </div>
+                        </div>
                     </div>
 
                     <!-- Project Card 2 -->
-                    <div data-aos="fade-up" data-aos-delay="200" class="bg-white dark:bg-gray-900 rounded-xl shadow-lg overflow-hidden group hover:shadow-2xl transition-all duration-300">
+                    <div data-aos="fade-up" data-aos-delay="200" class="relative bg-white/80 dark:bg-gray-900/80 glass rounded-xl shadow-lg overflow-hidden group hover:shadow-2xl transition-all duration-300">
                         <img src="https://placehold.co/600x400/EC4899/FFFFFF?text=Project+Two" alt="Project Placeholder" class="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105">
                         <div class="p-6">
                             <h3 class="text-xl font-bold mb-2 text-gray-900 dark:text-white">Internal Dashboard System</h3>
@@ -353,16 +458,30 @@
                             <span class="inline-block bg-purple-100 dark:bg-purple-900 text-primary-light dark:text-primary-dark text-xs font-semibold px-3 py-1 rounded-full">Angular</span>
                             <span class="inline-block bg-purple-100 dark:bg-purple-900 text-primary-light dark:text-primary-dark text-xs font-semibold px-3 py-1 rounded-full">TypeScript</span>
                         </div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-between p-4">
+                            <div class="text-white text-sm">Dashboard</div>
+                            <div class="space-x-2">
+                                <a href="#" class="px-3 py-1 text-sm text-white rounded-full btn-gradient shadow">Live</a>
+                                <a href="#" class="px-3 py-1 text-sm bg-white/80 text-gray-900 rounded-full">Code</a>
+                            </div>
+                        </div>
                     </div>
 
                     <!-- Project Card 3 -->
-                    <div data-aos="fade-up" data-aos-delay="300" class="bg-white dark:bg-gray-900 rounded-xl shadow-lg overflow-hidden group hover:shadow-2xl transition-all duration-300">
+                    <div data-aos="fade-up" data-aos-delay="300" class="relative bg-white/80 dark:bg-gray-900/80 glass rounded-xl shadow-lg overflow-hidden group hover:shadow-2xl transition-all duration-300">
                         <img src="https://placehold.co/600x400/10B981/FFFFFF?text=Project+Three" alt="Project Placeholder" class="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105">
                         <div class="p-6">
                             <h3 class="text-xl font-bold mb-2 text-gray-900 dark:text-white">Mobile-First Blog Platform</h3>
                             <p class="text-gray-600 dark:text-gray-400 mb-4 text-sm">A custom content management system optimized for blazing-fast loading speeds on mobile devices.</p>
                             <span class="inline-block bg-purple-100 dark:bg-purple-900 text-primary-light dark:text-primary-dark text-xs font-semibold px-3 py-1 rounded-full">Vue.js</span>
                             <span class="inline-block bg-purple-100 dark:bg-purple-900 text-primary-light dark:text-primary-dark text-xs font-semibold px-3 py-1 rounded-full">SCSS</span>
+                        </div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-between p-4">
+                            <div class="text-white text-sm">Blog</div>
+                            <div class="space-x-2">
+                                <a href="#" class="px-3 py-1 text-sm text-white rounded-full btn-gradient shadow">Live</a>
+                                <a href="#" class="px-3 py-1 text-sm bg-white/80 text-gray-900 rounded-full">Code</a>
+                            </div>
                         </div>
                     </div>
                     
@@ -443,33 +562,45 @@
         });
 
         // --- Theme Toggle Logic ---
-        const themeToggle = document.getElementById('theme-toggle');
-        const sunIcon = document.getElementById('theme-toggle-sun');
-        const moonIcon = document.getElementById('theme-toggle-moon');
+        const desktopThemeToggle = document.getElementById('theme-toggle');
+        const mobileThemeToggle = document.getElementById('theme-toggle-mobile');
+        
+        const desktopSunIcon = document.getElementById('theme-toggle-sun');
+        const desktopMoonIcon = document.getElementById('theme-toggle-moon');
+        const mobileSunIcon = document.getElementById('theme-toggle-sun-mobile');
+        const mobileMoonIcon = document.getElementById('theme-toggle-moon-mobile');
 
-        const isDarkMode = document.documentElement.classList.contains('dark');
-
-        // Set initial icon state
-        if (isDarkMode) {
-            moonIcon.classList.add('hidden');
-            sunIcon.classList.remove('hidden');
-        } else {
-            sunIcon.classList.add('hidden');
-            moonIcon.classList.remove('hidden');
+        function updateThemeIcons() {
+            if (document.documentElement.classList.contains('dark')) {
+                // Dark mode is on
+                desktopMoonIcon.classList.add('hidden');
+                desktopSunIcon.classList.remove('hidden');
+                mobileMoonIcon.classList.add('hidden');
+                mobileSunIcon.classList.remove('hidden');
+            } else {
+                // Light mode is on
+                desktopSunIcon.classList.add('hidden');
+                desktopMoonIcon.classList.remove('hidden');
+                mobileSunIcon.classList.add('hidden');
+                mobileMoonIcon.classList.remove('hidden');
+            }
         }
 
-        themeToggle.addEventListener('click', () => {
+        // Set initial state on page load
+        updateThemeIcons();
+
+        function toggleTheme() {
             document.documentElement.classList.toggle('dark');
             if (document.documentElement.classList.contains('dark')) {
                 localStorage.theme = 'dark';
-                moonIcon.classList.add('hidden');
-                sunIcon.classList.remove('hidden');
             } else {
                 localStorage.theme = 'light';
-                sunIcon.classList.add('hidden');
-                moonIcon.classList.remove('hidden');
             }
-        });
+            updateThemeIcons();
+        }
+
+        desktopThemeToggle.addEventListener('click', toggleTheme);
+        mobileThemeToggle.addEventListener('click', toggleTheme);
 
         // --- Mobile Menu Toggle ---
         const menuBtn = document.getElementById('menu-btn');
@@ -487,7 +618,6 @@
         const header = document.querySelector('header');
         const logoLink = document.querySelector('header nav > a');
 
-
         // Function to set the active state of navigation links (ScrollSpy Handler)
         function setActiveLink(sectionId) {
             allNavLinks.forEach(link => {
@@ -496,6 +626,7 @@
                 
                 // Reset styling for all links
                 link.classList.remove('font-semibold', 'text-primary-light', 'dark:text-primary-dark');
+                link.classList.remove('nav-active');
                 // Ensure default color classes are present for non-active links
                 link.classList.add('text-gray-700', 'dark:text-gray-300'); 
 
@@ -503,6 +634,7 @@
                 if (linkSectionId === sectionId) {
                     link.classList.add('font-semibold', 'text-primary-light', 'dark:text-primary-dark');
                     link.classList.remove('text-gray-700', 'dark:text-gray-300');
+                    link.classList.add('nav-active');
                 }
             });
             
@@ -584,7 +716,37 @@
                  setActiveLink('home');
             }
         });
-        
+
+        // 4. Scroll progress and back-to-top
+        const scrollProgress = document.getElementById('scroll-progress');
+        let backToTopBtn = document.getElementById('back-to-top');
+        if (!backToTopBtn) {
+            backToTopBtn = document.createElement('button');
+            backToTopBtn.id = 'back-to-top';
+            backToTopBtn.className = 'fixed bottom-6 right-6 z-50 hidden md:inline-flex items-center justify-center h-12 w-12 rounded-full btn-gradient text-white shadow-lg hover:shadow-xl transition-all duration-300';
+            backToTopBtn.setAttribute('aria-label', 'Back to top');
+            backToTopBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="currentColor"><path d="M12 4l-7 8h4v8h6v-8h4l-7-8z"/></svg>';
+            document.body.appendChild(backToTopBtn);
+        }
+
+        function updateScrollUI() {
+            const scrollTop = window.scrollY || document.documentElement.scrollTop;
+            const docHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+            scrollProgress.style.width = progress + '%';
+            if (scrollTop > 480) {
+                backToTopBtn.classList.remove('hidden');
+            } else {
+                backToTopBtn.classList.add('hidden');
+            }
+        }
+
+        window.addEventListener('scroll', updateScrollUI, { passive: true });
+        updateScrollUI();
+
+        backToTopBtn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
     </script>
 </body>
 </html>
